@@ -36,11 +36,31 @@ def test_main_status(monkeypatch, capsys):
 def test_main_feed(monkeypatch):
     calls = {"fed": False}
     monkeypatch.setattr(
-        "study_pet.__main__.feed_pet", lambda: calls.update(fed=True)
+        "study_pet.__main__.feed_pet", lambda x=None: calls.update(fed=True)
     )
     monkeypatch.setattr("sys.argv", ["prog", "feed"])
     main()
     assert calls["fed"]
+
+# feed option with parameter
+def test_main_feed_with_parameter(monkeypatch):
+    calls = {"fed_with": None}
+    monkeypatch.setattr(
+        "study_pet.__main__.feed_pet", lambda x=None: calls.update(fed_with=x)
+    )
+    monkeypatch.setattr("sys.argv", ["prog", "feed", "apple"])
+    main()
+    assert calls["fed_with"] == "apple"
+
+# rename option with parameter
+def test_main_rename_with_parameter(monkeypatch):
+    calls = {"renamed_with": None}
+    monkeypatch.setattr(
+        "study_pet.__main__.rename_pet", lambda x=None: calls.update(renamed_with=x)
+    )
+    monkeypatch.setattr("sys.argv", ["prog", "rename", "NewPetName"])
+    main()
+    assert calls["renamed_with"] == "NewPetName"
 
 # unknown command
 def test_main_invalid_command(monkeypatch, capsys):
