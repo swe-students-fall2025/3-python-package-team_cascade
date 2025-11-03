@@ -6,7 +6,7 @@ import study_pet.tracker as tracker
 
 
 def main():
-    parser = argparse.ArgumentParser(description="🐾 StudyPet CLI")
+    parser = argparse.ArgumentParser(description="� StudyPet")
     parser.add_argument(
         "command",
         nargs="?",
@@ -42,8 +42,8 @@ def main():
 def actions_menu():
     """Submenu for all pet-related actions."""
     while True:
-        print("\nActions Menu:")
-        print("1. Feed your pet")
+        print("\n🐍 Actions Menu:")
+        print("1. Feed your ball python")
         print("2. Back")
 
         choice = input("\nSelect an option (1–2): ").strip()
@@ -59,9 +59,9 @@ def actions_menu():
 def settings_menu():
     """Submenu for settings and info."""
     while True:
-        print("\nSettings Menu:")
-        print("1. Check pet status")
-        print("2. Rename your pet")
+        print("\n⚙️ Settings Menu:")
+        print("1. Check ball python status")
+        print("2. Rename your ball python")
         print("3. Reset all data")
         print("4. Back")
 
@@ -86,7 +86,7 @@ def settings_menu():
 def main_menu():
     """Main entry menu."""
     while True:
-        print("\n🐾 Welcome to StudyPet!\n")
+        print("\n� Welcome to SsstudyPet 🐍\n")
         print("1. Start studying ")
         print("2. End session")
         print("3. Actions")
