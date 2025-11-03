@@ -53,7 +53,7 @@ def test_set_morph_invalid_parameter(capsys):
 
 def test_set_morph_cancel(monkeypatch, capsys):
     """Test canceling morph selection"""
-    monkeypatch.setattr(builtins, "input", lambda _: "11")  # Choose cancel option
+    monkeypatch.setattr(builtins, "input", lambda _: "12")  # Choose cancel option (len(morphs) + 1)
     set_morph()
     state = load_state()
     captured = capsys.readouterr().out
