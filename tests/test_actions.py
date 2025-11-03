@@ -49,7 +49,7 @@ def test_rename_pet_with_parameter(capsys):
     new_state = load_state()
     captured = capsys.readouterr().out
     assert new_state["name"] == "NewName"
-    assert "Pet name changed to 'NewName'!" in captured 
+    assert "🐍 Ball python name changed to 'NewName'!" in captured 
 
 
 # feed_pet(): correct case
