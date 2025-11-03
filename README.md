@@ -21,7 +21,7 @@ pip install study-pet
 Or install from source:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/team_cascade.git
+git clone https://github.com/swe-students-fall2025/3-python-package-team_cascade.git
 cd team_cascade
 pipenv install --dev
 ```
