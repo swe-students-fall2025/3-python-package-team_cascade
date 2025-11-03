@@ -1,9 +1,9 @@
 """
 study_pet/pet/core.py
 -------------------------------------------
-Core logic for StudyPet:
+Core logic for SsstudyPet:
 Handles leveling, experience, and status updates
-based on total study time.
+based on total study time for your ball python.
 
 Design principles:
 - update_pet(): true update (writes to persistent JSON)

@@ -1,10 +1,10 @@
 """
-Tracks study sessions for StudyPet.
+Tracks study sessions for SsstudyPet.
 
 Responsible for:
 - Starting and ending sessions
 - Updating total study time
-- Triggering pet updates (level, exp)
+- Triggering ball python updates (level, exp)
 """
 
 import atexit
@@ -101,7 +101,7 @@ def end_session():
 
     # Trigger pet update
     update_pet()
-    print("Pet data updated!")
+    print("🐍 Ball python data updated!")
 
 
 def reset_sessions():

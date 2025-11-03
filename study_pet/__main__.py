@@ -6,7 +6,7 @@ import study_pet.tracker as tracker
 
 
 def main():
-    parser = argparse.ArgumentParser(description="� StudyPet")
+    parser = argparse.ArgumentParser(description="🐍 SsstudyPet")
     parser.add_argument(
         "command",
         nargs="?",
@@ -92,7 +92,7 @@ def main_menu():
         print("3. Actions")
         print("4. Settings")
         print("5. Close Menu (return to terminal)")
-        print("6. Exit (Close StudyPet to terminal)")
+        print("6. Exit (Close SsstudyPet to terminal)")
 
         choice = input("\nSelect an option (1–6): ").strip()
         if choice == "1":
