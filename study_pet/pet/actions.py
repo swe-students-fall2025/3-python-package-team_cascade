@@ -144,3 +144,121 @@ def feed_pet(food_name: str = None):
     print(food["msg"])
     print(f"🐍 Mood increased to {new_mood}/100.")
     print(f"💰 Remaining balance: {money} coins.\n")
+
+
+def set_morph(morph_name: str = None):
+    """
+    Set the ball python's morph (color pattern).
+    If no morph_name is passed, will show interactive menu.
+    """
+    state = load_state()
+    current_morph = state.get("morph", "Normal/Wild Type")
+    
+    # Available morphs with descriptions
+    morphs = {
+        "1": {
+            "name": "Normal/Wild Type",
+            "desc": "Natural coloration with brown and tan patterns"
+        },
+        "2": {
+            "name": "Albino",
+            "desc": "Yellow, orange, and white with red/pink eyes"
+        },
+        "3": {
+            "name": "Pastel",
+            "desc": "Brightened colors with lighter yellows"
+        },
+        "4": {
+            "name": "Spider",
+            "desc": "Bold, high-contrast web-like appearance"
+        },
+        "5": {
+            "name": "Mojave",
+            "desc": "Lighter sides with prominent dorsal stripe"
+        },
+        "6": {
+            "name": "Pinstripe",
+            "desc": "Clean, thin stripe down the spine"
+        },
+        "7": {
+            "name": "Clown",
+            "desc": "Distinctive head pattern and elongated blotches"
+        },
+        "8": {
+            "name": "Banana",
+            "desc": "Bright yellow and purple/lavender coloring"
+        },
+        "9": {
+            "name": "Black Pastel",
+            "desc": "Darkened coloration with good contrast"
+        },
+        "10": {
+            "name": "Cinnamon",
+            "desc": "Rich brown and caramel tones"
+        },
+        "11": {
+            "name": "Custom",
+            "desc": "Create your own unique morph!"
+        }
+    }
+    
+    # If morph_name is provided directly
+    if morph_name:
+        morph_name = morph_name.strip()
+        # Check if it matches any morph name
+        found = False
+        for morph_data in morphs.values():
+            if morph_data["name"].lower() == morph_name.lower():
+                state["morph"] = morph_data["name"]
+                save_state(state)
+                print(f"🐍 Your ball python's morph is now: {morph_data['name']}!")
+                print(f"   {morph_data['desc']}")
+                found = True
+                break
+        
+        if not found:
+            # Allow custom morph names from command line
+            state["morph"] = morph_name
+            save_state(state)
+            print(f"🐍 Your ball python's morph is now: {morph_name} (custom)!")
+        return
+    
+    # Interactive menu mode
+    print(f"\n🐍 Current morph: {current_morph}")
+    print("\n✨ Choose your ball python's morph:\n")
+    
+    for key, morph_data in morphs.items():
+        print(f"{key:>2}. {morph_data['name']:<20} - {morph_data['desc']}")
+    
+    print(f"\n{len(morphs) + 1}. Cancel")
+    
+    choice = input(f"\nSelect (1–{len(morphs) + 1}): ").strip()
+    
+    if choice == str(len(morphs) + 1):
+        print("Morph selection cancelled.")
+        return
+    
+    if choice not in morphs:
+        print("❌ Invalid choice.")
+        return
+    
+    # Handle custom morph option
+    if choice == "11":
+        custom_morph = input("\n✨ Enter your custom morph name: ").strip()
+        if not custom_morph:
+            print("❌ Morph name cannot be empty.")
+            return
+        
+        state["morph"] = custom_morph
+        save_state(state)
+        print(f"\n🐍 Your ball python's morph is now: {custom_morph} (custom)!")
+        print("✨ Your python looks unique and beautiful!\n")
+        return
+    
+    selected_morph = morphs[choice]["name"]
+    state["morph"] = selected_morph
+    save_state(state)
+    
+    print(f"\n✨ Your ball python's morph is now: {selected_morph}!")
+    print(f"   {morphs[choice]['desc']}")
+    print("🐍 Your python looks beautiful!\n")

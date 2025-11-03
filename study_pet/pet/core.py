@@ -74,6 +74,7 @@ def get_status():
     name = state.get("name", "Unnamed")
     mood = state.get("mood", 100)
     money = state.get("money", 0)
+    morph = state.get("morph", "Normal/Wild Type")
 
     streak = state.get("streak_days", 0)
     last_study = state.get("last_study_date", "N/A")
@@ -82,20 +83,21 @@ def get_status():
 
     # Ball python mood descriptions
     if mood >= 80:
-        mood_status = "� Slithering happily!"
+        mood_status = "Slithering happily!"
     elif mood >= 60:
-        mood_status = "� Coiled and content."
+        mood_status = "Coiled and content."
     elif mood >= 40:
-        mood_status = "� A bit sluggish..."
+        mood_status = "A bit sluggish..."
     elif mood >= 20:
-        mood_status = "� Needs feeding soon!"
+        mood_status = "Needs feeding soon!"
     else:
-        mood_status = "� Very lethargic!"
+        mood_status = "Very lethargic!"
 
     status = (
         f"\n🐍 Ball Python Status 🐍\n"
         f"--------------------------------\n"
         f"{name} the Ball Python\n"
+        f"Morph: {morph}\n"
         f"Level: {level} ({exp:.0f} EXP)\n"
         f"Total Study Time: {total_time:.2f} hrs (+{elapsed:.2f}h current)\n"
         f"Last Study: {last_study}\n"

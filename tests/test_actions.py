@@ -59,7 +59,7 @@ def test_feed_pet_increases_mood(monkeypatch):
     state["mood"] = 60
     save_state(state)
 
-    inputs = iter(["1"])  # Apple
+    inputs = iter(["1"])  # Mouse
     monkeypatch.setattr(builtins, "input", lambda _: next(inputs))
     feed_pet()
     new_state = load_state()
@@ -105,7 +105,7 @@ def test_feed_pet_custom_food(monkeypatch):
 
 # feed_pet(): menu item 6 - custom food empty
 def test_feed_pet_custom_food_empty_name(monkeypatch, capsys):
-    # if user input is empty, mystery meal
+    # if user input is empty, mystery prey
     state = load_state()
     state["money"] = 500
     save_state(state)
@@ -115,7 +115,7 @@ def test_feed_pet_custom_food_empty_name(monkeypatch, capsys):
 
     feed_pet()
     captured = capsys.readouterr().out
-    assert "mystery meal" in captured
+    assert "mystery prey" in captured
 
 # feed_pet(): menu item 7 - return 
 def test_feed_pet_return(monkeypatch):
@@ -132,21 +132,21 @@ def test_feed_pet_return(monkeypatch):
     assert new_state["money"] == 500
     assert new_state["mood"] == 50
 
-# feed_pet(): with parameter - apple
-def test_feed_pet_with_parameter_apple(capsys):
+# feed_pet(): with parameter - mouse (ball python food)
+def test_feed_pet_with_parameter_mouse(capsys):
     state = load_state()
     state["money"] = 500
     state["mood"] = 60
     save_state(state)
     
-    feed_pet("apple")
+    feed_pet("mouse")
     
     new_state = load_state()
     captured = capsys.readouterr().out
-    assert new_state["mood"] == 70  # 60 + 10
-    assert new_state["money"] == 420  # 500 - 80
-    assert "apple" in captured.lower()
-    assert "🍎" in captured
+    assert new_state["mood"] == 68  # 60 + 8
+    assert new_state["money"] == 450  # 500 - 50
+    assert "mouse" in captured.lower()
+    assert "🐭" in captured
 
 # feed_pet(): with parameter - invalid food name
 def test_feed_pet_invalid_food_name(capsys):
@@ -162,3 +162,73 @@ def test_feed_pet_invalid_food_name(capsys):
     assert new_state["mood"] == 60  # unchanged
     assert new_state["money"] == 500  # unchanged
     assert "Invalid food name" in captured
+
+
+# feed_pet(): test all ball python foods
+def test_feed_pet_rat(capsys):
+    """Test feeding rat to ball python"""
+    state = load_state()
+    state["money"] = 500
+    state["mood"] = 60
+    save_state(state)
+    
+    feed_pet("rat")
+    
+    new_state = load_state()
+    assert new_state["mood"] == 75  # 60 + 15
+    assert new_state["money"] == 420  # 500 - 80
+    
+
+def test_feed_pet_cricket(capsys):
+    """Test feeding cricket to ball python"""
+    state = load_state()
+    state["money"] = 500
+    state["mood"] = 60
+    save_state(state)
+    
+    feed_pet("cricket")
+    
+    new_state = load_state()
+    assert new_state["mood"] == 65  # 60 + 5
+    assert new_state["money"] == 470  # 500 - 30
+
+
+def test_feed_pet_quail(capsys):
+    """Test feeding quail to ball python"""
+    state = load_state()
+    state["money"] = 500
+    state["mood"] = 60
+    save_state(state)
+    
+    feed_pet("quail")
+    
+    new_state = load_state()
+    assert new_state["mood"] == 80  # 60 + 20
+    assert new_state["money"] == 370  # 500 - 130
+
+
+def test_feed_pet_rabbit(capsys):
+    """Test feeding rabbit to ball python"""
+    state = load_state()
+    state["money"] = 500
+    state["mood"] = 60
+    save_state(state)
+    
+    feed_pet("rabbit")
+    
+    new_state = load_state()
+    assert new_state["mood"] == 85  # 60 + 25
+    assert new_state["money"] == 350  # 500 - 150
+
+
+def test_ball_python_theme_in_output(capsys):
+    """Test that ball python theme appears in feed output"""
+    state = load_state()
+    state["money"] = 500
+    state["mood"] = 60
+    save_state(state)
+    
+    feed_pet("mouse")
+    
+    captured = capsys.readouterr().out
+    assert "ball python" in captured.lower()
