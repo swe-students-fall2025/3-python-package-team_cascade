@@ -1,23 +1,23 @@
 from . import start_session, end_session, get_status, reset_pet
 from .data_manager import load_state, save_state
-from .pet import rename_pet, feed_pet, check_daily_mood_decay
+from .pet import rename_pet, feed_pet, set_morph, check_daily_mood_decay
 import argparse
 import study_pet.tracker as tracker
 
 
 def main():
-    parser = argparse.ArgumentParser(description="🐾 StudyPet CLI")
+    parser = argparse.ArgumentParser(description="🐍 SsstudyPet")
     parser.add_argument(
         "command",
         nargs="?",
         default="menu",
-        help="Available commands: start, end, status, feed, rename, menu",
+        help="Available commands: start, end, status, feed, rename, morph, menu",
     )
     parser.add_argument(
         "arg",
         nargs="?",
         default=None,
-        help="Optional argument for feed (food name) or rename (new name)",
+        help="Optional argument for feed (food name), rename (new name), or morph (morph type)",
     )
     args = parser.parse_args()
 
@@ -33,17 +33,19 @@ def main():
         feed_pet(args.arg)
     elif args.command == "rename":
         rename_pet(args.arg)
+    elif args.command == "morph":
+        set_morph(args.arg)
     elif args.command == "menu":
         main_menu()
     else:
-        print("Unknown command. Use: start | end | status | feed [food] | rename [name] | menu")
+        print("Unknown command. Use: start | end | status | feed [food] | rename [name] | morph [type] | menu")
 
 
 def actions_menu():
     """Submenu for all pet-related actions."""
     while True:
-        print("\nActions Menu:")
-        print("1. Feed your pet")
+        print("\n🐍 Actions Menu:")
+        print("1. Feed your ball python")
         print("2. Back")
 
         choice = input("\nSelect an option (1–2): ").strip()
@@ -59,25 +61,28 @@ def actions_menu():
 def settings_menu():
     """Submenu for settings and info."""
     while True:
-        print("\nSettings Menu:")
-        print("1. Check pet status")
-        print("2. Rename your pet")
-        print("3. Reset all data")
-        print("4. Back")
+        print("\n⚙️ Settings Menu:")
+        print("1. Check ball python status")
+        print("2. Rename your ball python")
+        print("3. Change ball python morph")
+        print("4. Reset all data")
+        print("5. Back")
 
-        choice = input("\nSelect an option (1–4): ").strip()
+        choice = input("\nSelect an option (1–5): ").strip()
 
         if choice == "1":
             print(get_status())
         elif choice == "2":
             rename_pet()
         elif choice == "3":
+            set_morph()
+        elif choice == "4":
             confirm = input(
                 "This will reset all progress. Type 'byebye' to confirm "
             ).lower()
             if confirm == "byebye":
                 reset_pet()
-        elif choice == "4":
+        elif choice == "5":
             break
         else:
             print("Invalid option. Try again.")
@@ -86,13 +91,13 @@ def settings_menu():
 def main_menu():
     """Main entry menu."""
     while True:
-        print("\n🐾 Welcome to StudyPet!\n")
+        print("\n� Welcome to SsstudyPet 🐍\n")
         print("1. Start studying ")
         print("2. End session")
         print("3. Actions")
         print("4. Settings")
         print("5. Close Menu (return to terminal)")
-        print("6. Exit (Close StudyPet to terminal)")
+        print("6. Exit (Close SsstudyPet to terminal)")
 
         choice = input("\nSelect an option (1–6): ").strip()
         if choice == "1":

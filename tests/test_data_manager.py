@@ -24,8 +24,10 @@ def test_load_state_creates_default_file():
     assert state["level"] == 1
     assert "session_tasks_planned" in state
     assert "session_tasks_completed" in state
+    assert "morph" in state
     assert state["session_tasks_planned"] == 0
     assert state["session_tasks_completed"] == 0
+    assert state["morph"] == "Normal/Wild Type"
 
 
 def test_save_state_writes_to_file():
@@ -38,13 +40,14 @@ def test_save_state_writes_to_file():
 
 
 def test_reset_state_resets_to_default():
-    dm.save_state({"name": "WrongPet", "level": 10, "session_tasks_planned": 5})
+    dm.save_state({"name": "WrongPet", "level": 10, "session_tasks_planned": 5, "morph": "Custom"})
     dm.reset_state()
     state = dm.load_state()
     assert state["name"] == "Guido"
     assert state["level"] == 1
     assert state["session_tasks_planned"] == 0
     assert state["session_tasks_completed"] == 0
+    assert state["morph"] == "Normal/Wild Type"
 
 
 def test_save_and_reload():

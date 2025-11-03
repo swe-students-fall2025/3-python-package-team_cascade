@@ -18,6 +18,7 @@ default_state = {
     "last_open_date": None,
     "session_tasks_planned": 0,
     "session_tasks_completed": 0,
+    "morph": "Normal/Wild Type",
 }
 
 

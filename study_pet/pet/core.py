@@ -1,9 +1,9 @@
 """
 study_pet/pet/core.py
 -------------------------------------------
-Core logic for StudyPet:
+Core logic for SsstudyPet:
 Handles leveling, experience, and status updates
-based on total study time.
+based on total study time for your ball python.
 
 Design principles:
 - update_pet(): true update (writes to persistent JSON)
@@ -41,7 +41,7 @@ def update_pet():
     new_level, new_exp = _calculate_level_exp(total_time)
 
     if new_level > prev_level:
-        print(f" {state['name']} leveled up! {prev_level} → {new_level}")
+        print(f"🐍 {state['name']} the ball python leveled up! {prev_level} → {new_level}")
 
     # Update state values
     state["level"] = new_level
@@ -74,27 +74,30 @@ def get_status():
     name = state.get("name", "Unnamed")
     mood = state.get("mood", 100)
     money = state.get("money", 0)
+    morph = state.get("morph", "Normal/Wild Type")
 
     streak = state.get("streak_days", 0)
     last_study = state.get("last_study_date", "N/A")
 
     studying = "Studying now" if last_start else " Idle"
 
+    # Ball python mood descriptions
     if mood >= 80:
-        mood_status = "😊 Very happy!"
+        mood_status = "Slithering happily!"
     elif mood >= 60:
-        mood_status = "😌 Content."
+        mood_status = "Coiled and content."
     elif mood >= 40:
-        mood_status = "😕 A bit tired..."
+        mood_status = "A bit sluggish..."
     elif mood >= 20:
-        mood_status = "😣 Needs care soon!"
+        mood_status = "Needs feeding soon!"
     else:
-        mood_status = "😭 Very sad!"
+        mood_status = "Very lethargic!"
 
     status = (
-        f"\n Pet Status \n"
+        f"\n🐍 Ball Python Status 🐍\n"
         f"--------------------------------\n"
-        f"{name}\n"
+        f"{name} the Ball Python\n"
+        f"Morph: {morph}\n"
         f"Level: {level} ({exp:.0f} EXP)\n"
         f"Total Study Time: {total_time:.2f} hrs (+{elapsed:.2f}h current)\n"
         f"Last Study: {last_study}\n"
@@ -179,7 +182,7 @@ def check_daily_mood_decay():
         )
 
     if new_mood == 0:
-        print("Your pet is very sad... please feed it soon!")
+        print("Your ball python is very lethargic... please feed it soon! 🐍")
 
     return new_mood
 

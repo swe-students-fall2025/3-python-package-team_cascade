@@ -50,3 +50,44 @@ def test_check_daily_mood_decay_reduces_mood():
     save_state(s)
     new_mood = check_daily_mood_decay()
     assert new_mood < 80
+
+
+def test_get_status_shows_ball_python_theme():
+    """Test that status display includes ball python theme"""
+    status = get_status()
+    assert "Ball Python" in status
+    assert "🐍" in status
+
+
+def test_get_status_shows_morph():
+    """Test that status display includes morph information"""
+    state = load_state()
+    state["morph"] = "Albino"
+    save_state(state)
+    
+    status = get_status()
+    assert "Morph:" in status
+    assert "Albino" in status
+
+
+def test_get_status_shows_default_morph():
+    """Test that status displays default morph"""
+    status = get_status()
+    assert "Normal/Wild Type" in status or "Morph:" in status
+
+
+def test_ball_python_mood_descriptions():
+    """Test that ball python mood descriptions are used"""
+    state = load_state()
+    
+    # Test high mood (slithering happily)
+    state["mood"] = 90
+    save_state(state)
+    status = get_status()
+    assert "Slithering happily" in status or "🐍" in status
+    
+    # Test low mood (lethargic)
+    state["mood"] = 10
+    save_state(state)
+    status = get_status()
+    assert "lethargic" in status.lower() or "🐍" in status

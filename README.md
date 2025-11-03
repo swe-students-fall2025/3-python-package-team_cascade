@@ -1,18 +1,18 @@
 [![CI](https://github.com/swe-students-fall2025/3-python-package-team_cascade/actions/workflows/ci.yml/badge.svg?branch=pipfile-experiment)](https://github.com/swe-students-fall2025/3-python-package-team_cascade/actions/workflows/ci.yml)
 
-# StudyPet
+# 🐍 SsstudyPet
 
-**StudyPet** is a Python package that provides an interactive command-line application to gamify your study sessions by letting you raise and care for a virtual pet. The more you study, the more your pet grows! Track your study time, earn coins, feed your pet, and watch it level up as you build consistent study habits.
+**SsstudyPet** is a Python package that provides an interactive command-line application to gamify your study sessions by letting you raise and care for a virtual ball python. The more you study, the more your snake grows! Track your study time, earn coins, feed your python, and watch it level up as you build consistent study habits.
 
 ## Features
 
 - **📚 Study Session Tracking**: Start and end study sessions with automatic time tracking
 - **✅ Task-Based Rewards**: Set tasks at the start of each session and earn 75 coins per completed task
-- **🐾 Virtual Pet System**: Your pet levels up based on total study hours (1 level per 5 hours)
-- **😊 Mood System**: Keep your pet happy by logging in regularly and feeding it
-- **💰 Earn Coins**: Complete tasks to earn coins that can be used to purchase food for your pet
-- **🍰 Feed Your Pet**: Choose from various foods (apple, cake, coffee, sushi, and more) to boost mood
-- **📈 Progress Tracking**: Monitor your study streaks, total study time, and pet status
+- **� Virtual Ball Python**: Your snake levels up based on total study hours (1 level per 5 hours)
+- **� Mood System**: Keep your python happy by logging in regularly and feeding it
+- **💰 Earn Coins**: Complete tasks to earn coins that can be used to purchase food for your python
+- **🐭 Feed Your Python**: Choose from various prey (mouse, rat, quail, rabbit, cricket) to boost mood
+- **📈 Progress Tracking**: Monitor your study streaks, total study time, and python status
 - **🔄 Auto-save**: Sessions automatically save on exit or interruption
 - **🎮 Interactive Menu**: Easy-to-use CLI menu for all features
 

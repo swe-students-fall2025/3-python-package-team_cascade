@@ -48,9 +48,9 @@ def test_main_feed_with_parameter(monkeypatch):
     monkeypatch.setattr(
         "study_pet.__main__.feed_pet", lambda x=None: calls.update(fed_with=x)
     )
-    monkeypatch.setattr("sys.argv", ["prog", "feed", "apple"])
+    monkeypatch.setattr("sys.argv", ["prog", "feed", "mouse"])
     main()
-    assert calls["fed_with"] == "apple"
+    assert calls["fed_with"] == "mouse"
 
 # rename option with parameter
 def test_main_rename_with_parameter(monkeypatch):
@@ -61,6 +61,26 @@ def test_main_rename_with_parameter(monkeypatch):
     monkeypatch.setattr("sys.argv", ["prog", "rename", "NewPetName"])
     main()
     assert calls["renamed_with"] == "NewPetName"
+
+# morph option
+def test_main_morph(monkeypatch):
+    calls = {"morph_set": False}
+    monkeypatch.setattr(
+        "study_pet.__main__.set_morph", lambda x=None: calls.update(morph_set=True)
+    )
+    monkeypatch.setattr("sys.argv", ["prog", "morph"])
+    main()
+    assert calls["morph_set"]
+
+# morph option with parameter
+def test_main_morph_with_parameter(monkeypatch):
+    calls = {"morph_with": None}
+    monkeypatch.setattr(
+        "study_pet.__main__.set_morph", lambda x=None: calls.update(morph_with=x)
+    )
+    monkeypatch.setattr("sys.argv", ["prog", "morph", "Albino"])
+    main()
+    assert calls["morph_with"] == "Albino"
 
 # unknown command
 def test_main_invalid_command(monkeypatch, capsys):
