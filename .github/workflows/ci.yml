@@ -31,3 +31,7 @@ jobs:
       - name: Run tests
         run: |
           pipenv run pytest --maxfail=1 --disable-warnings -q
+
+      - name: Build package
+        run: |
+          pipenv run python -m build
