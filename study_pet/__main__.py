@@ -1,6 +1,6 @@
 from . import start_session, end_session, get_status, reset_pet
 from .data_manager import load_state, save_state
-from .pet import rename_pet, collect_money, feed_pet, check_daily_mood_decay
+from .pet import rename_pet, feed_pet, check_daily_mood_decay
 import argparse
 import study_pet.tracker as tracker
 
@@ -43,17 +43,14 @@ def actions_menu():
     """Submenu for all pet-related actions."""
     while True:
         print("\nActions Menu:")
-        print("1. Collect coins ")
-        print("2. Feed your pet")
-        print("3. Back")
+        print("1. Feed your pet")
+        print("2. Back")
 
-        choice = input("\nSelect an option (1–3): ").strip()
+        choice = input("\nSelect an option (1–2): ").strip()
 
         if choice == "1":
-            collect_money()
-        elif choice == "2":
             feed_pet()
-        elif choice == "3":
+        elif choice == "2":
             break
         else:
             print("Invalid option. Try again.")

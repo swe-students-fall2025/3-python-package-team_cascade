@@ -1,6 +1,7 @@
 import sys, os
 import time
 import pytest
+import builtins
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -23,19 +24,24 @@ def clean_data_file():
     reset_state()
 
 
-def test_start_session_creates_timestamp():
+def test_start_session_creates_timestamp(monkeypatch):
+    monkeypatch.setattr(builtins, "input", lambda _: "3")
     start_session()
     state = load_state()
     assert state["last_session_start"] is not None
+    assert state["session_tasks_planned"] == 3
 
 
-def test_end_session_updates_total_time():
+def test_end_session_updates_total_time(monkeypatch):
+    inputs = iter(["5", "3"])  # 5 tasks planned, 3 completed
+    monkeypatch.setattr(builtins, "input", lambda _: next(inputs))
     start_session()
     time.sleep(0.5)
     end_session()
     state = load_state()
     assert state["total_study_time"] > 0
     assert state["last_session_start"] is None
+    assert state["session_tasks_planned"] == 0  # reset after session ends
 
 
 def test_get_total_time_matches_state():
@@ -46,8 +52,8 @@ def test_get_total_time_matches_state():
     assert abs(total_time - 12.34) < 0.001
 
 
-def test_reset_sessions_clears_active_session():
-
+def test_reset_sessions_clears_active_session(monkeypatch):
+    monkeypatch.setattr(builtins, "input", lambda _: "2")
     start_session()
     reset_sessions()
     state = load_state()
@@ -63,9 +69,77 @@ def test_end_session_without_start_does_not_crash():
 
 
 def test_auto_end_session_respects_manual_close(monkeypatch):
+    monkeypatch.setattr(builtins, "input", lambda _: "1")
     start_session()
     monkeypatch.setattr("study_pet.tracker.manual_close", True)
     _auto_end_session()
     state = load_state()
     # still active because manual close skipped
     assert state["last_session_start"] is not None
+
+
+def test_task_rewards_coins(monkeypatch):
+    """Test that completing tasks rewards coins correctly."""
+    inputs = iter(["5", "3"])  # 5 tasks planned, 3 completed
+    monkeypatch.setattr(builtins, "input", lambda _: next(inputs))
+    
+    state = load_state()
+    initial_money = state["money"]
+    
+    start_session()
+    time.sleep(0.1)
+    end_session()
+    
+    state = load_state()
+    # 3 tasks * 75 coins per task = 225 coins
+    assert state["money"] == initial_money + 225
+    assert state["session_tasks_completed"] == 3
+
+
+def test_no_tasks_planned_no_rewards(monkeypatch):
+    """Test that sessions with 0 tasks don't ask for completion or give rewards."""
+    monkeypatch.setattr(builtins, "input", lambda _: "0")
+    
+    state = load_state()
+    initial_money = state["money"]
+    
+    start_session()
+    time.sleep(0.1)
+    end_session()
+    
+    state = load_state()
+    # No tasks, no rewards
+    assert state["money"] == initial_money
+    assert state["session_tasks_planned"] == 0
+
+
+def test_completing_more_tasks_than_planned(monkeypatch):
+    """Test completing more tasks than planned with confirmation."""
+    inputs = iter(["3", "5", "y"])  # 3 planned, 5 completed, confirm yes
+    monkeypatch.setattr(builtins, "input", lambda _: next(inputs))
+    
+    state = load_state()
+    initial_money = state["money"]
+    
+    start_session()
+    time.sleep(0.1)
+    end_session()
+    
+    state = load_state()
+    # 5 tasks * 75 coins = 375 coins
+    assert state["money"] == initial_money + 375
+    assert state["session_tasks_completed"] == 5
+
+
+def test_start_session_validates_task_input(monkeypatch, capsys):
+    """Test that start_session validates numeric input for tasks."""
+    inputs = iter(["invalid", "-1", "3"])  # invalid, negative, then valid
+    monkeypatch.setattr(builtins, "input", lambda _: next(inputs))
+    
+    start_session()
+    
+    captured = capsys.readouterr().out
+    assert "Please enter a valid number" in captured or "Please enter a positive number" in captured
+    
+    state = load_state()
+    assert state["session_tasks_planned"] == 3

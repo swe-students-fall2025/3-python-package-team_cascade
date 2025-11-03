@@ -7,9 +7,10 @@
 ## Features
 
 - **📚 Study Session Tracking**: Start and end study sessions with automatic time tracking
+- **✅ Task-Based Rewards**: Set tasks at the start of each session and earn 75 coins per completed task
 - **🐾 Virtual Pet System**: Your pet levels up based on total study hours (1 level per 5 hours)
 - **😊 Mood System**: Keep your pet happy by logging in regularly and feeding it
-- **💰 Coin Collection**: Earn coins every 30 minutes to purchase food for your pet
+- **💰 Earn Coins**: Complete tasks to earn coins that can be used to purchase food for your pet
 - **🍰 Feed Your Pet**: Choose from various foods (apple, cake, coffee, sushi, and more) to boost mood
 - **📈 Progress Tracking**: Monitor your study streaks, total study time, and pet status
 - **🔄 Auto-save**: Sessions automatically save on exit or interruption

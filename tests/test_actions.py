@@ -3,7 +3,7 @@ from datetime import datetime
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from study_pet.pet.actions import rename_pet, collect_money, feed_pet
+from study_pet.pet.actions import rename_pet, feed_pet
 from study_pet.data_manager import load_state, save_state, reset_state
 
 
@@ -51,23 +51,6 @@ def test_rename_pet_with_parameter(capsys):
     assert new_state["name"] == "NewName"
     assert "Pet name changed to 'NewName'!" in captured 
 
-
-# collect_money(): correct case
-def test_collect_money_adds_balance(monkeypatch):
-    state = load_state()
-    start_money = state["money"]
-    collect_money()
-    state = load_state()
-    assert state["money"] > start_money
-
-# collect_money(): invalid case
-def test_collect_money_respects_cooldown(monkeypatch, capsys):
-    state = load_state()
-    state["last_collect_time"] = time.time()
-    save_state(state)
-    collect_money()
-    captured = capsys.readouterr().out
-    assert "You can collect again" in captured
 
 # feed_pet(): correct case
 def test_feed_pet_increases_mood(monkeypatch):

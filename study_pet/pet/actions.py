@@ -29,37 +29,6 @@ def rename_pet(new_name: str = None):
     print(f"Pet name changed to '{new_name}'!\n")
 
 
-def collect_money():
-    """
-    Allows user to collect money once every 30 minutes.
-    Grants a random reward between 50–100 coins.
-    """
-    state = load_state()
-    now = time.time()
-    name = state.get("name", "Guido")
-    last_collect = state.get("last_collect_time", None)
-
-    cooldown = 30 * 60  # 30 minutes in seconds
-
-    if last_collect:
-        elapsed = now - last_collect
-        if elapsed < cooldown:
-            remaining = cooldown - elapsed
-            minutes = int(remaining // 60)
-            seconds = int(remaining % 60)
-            print(f"You can collect again in {minutes}m {seconds}s.")
-            return
-
-    # reward logic
-    reward = random.randint(50, 100)
-    state["money"] = state.get("money", 0) + reward
-    state["last_collect_time"] = now
-    save_state(state)
-
-    print(f"{name} found {reward} coins!")
-    print(f"Total balance: {state['money']} coins.")
-
-
 def feed_pet(food_name: str = None):
     """
     Feed your pet with food purchased using money.
