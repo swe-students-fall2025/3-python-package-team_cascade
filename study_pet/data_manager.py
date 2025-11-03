@@ -14,9 +14,10 @@ default_state = {
     "mood": 100,
     "streak_days": 0,
     "money": 0,
-    "last_collect_time": None,
     "last_feed_date": None,
     "last_open_date": None,
+    "session_tasks_planned": 0,
+    "session_tasks_completed": 0,
 }
 
 

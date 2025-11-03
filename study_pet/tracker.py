@@ -26,15 +26,30 @@ def start_session():
         print("A study session is already active.")
         return
 
+    # Ask for number of tasks to complete
+    while True:
+        try:
+            num_tasks = input("How many tasks do you plan to complete this session? ")
+            num_tasks = int(num_tasks)
+            if num_tasks < 0:
+                print("Please enter a positive number.")
+                continue
+            break
+        except ValueError:
+            print("Please enter a valid number.")
+    
     state["last_session_start"] = time.time()
+    state["session_tasks_planned"] = num_tasks
+    state["session_tasks_completed"] = 0
     save_state(state)
     print(f"📘 Study session started at {datetime.now().strftime('%H:%M:%S')}")
+    print(f"📝 Tasks planned: {num_tasks}")
 
 
 def end_session():
     """
     Ends a study session and updates total study time.
-    Also triggers a pet level/exp update.
+    Also triggers a pet level/exp update and rewards coins for completed tasks.
     """
     state = load_state()
     start_time = state.get("last_session_start", None)
@@ -47,13 +62,42 @@ def end_session():
     end_time = time.time()
     elapsed_hours = (end_time - start_time) / 3600
 
+    # Ask for completed tasks
+    tasks_planned = state.get("session_tasks_planned", 0)
+    if tasks_planned > 0:
+        print(f"\n📝 You planned to complete {tasks_planned} task(s).")
+        while True:
+            try:
+                tasks_completed = input("How many tasks did you complete? ")
+                tasks_completed = int(tasks_completed)
+                if tasks_completed < 0:
+                    print("Please enter a positive number.")
+                    continue
+                if tasks_completed > tasks_planned:
+                    confirm = input(f"You completed more than planned! Confirm {tasks_completed} tasks? (y/n) ").lower()
+                    if confirm != 'y':
+                        continue
+                break
+            except ValueError:
+                print("Please enter a valid number.")
+        
+        # Reward coins for completed tasks
+        coins_per_task = 75
+        coins_earned = tasks_completed * coins_per_task
+        state["money"] = state.get("money", 0) + coins_earned
+        state["session_tasks_completed"] = tasks_completed
+        
+        print(f"✅ You completed {tasks_completed} task(s)!")
+        print(f"💰 Earned {coins_earned} coins! (Total: {state['money']} coins)")
+    
     # Update totals
     state["total_study_time"] += elapsed_hours
     state["last_session_start"] = None
     state["last_study_date"] = datetime.now().strftime("%Y-%m-%d")
+    state["session_tasks_planned"] = 0
 
     save_state(state)
-    print(f"Study session ended. Duration: {elapsed_hours:.2f} hours")
+    print(f"\n⏱️  Study session ended. Duration: {elapsed_hours:.2f} hours")
 
     # Trigger pet update
     update_pet()
