@@ -217,10 +217,8 @@ def set_morph(morph_name: str = None):
                 break
         
         if not found:
-            # Allow custom morph names from command line
-            state["morph"] = morph_name
-            save_state(state)
-            print(f"🐍 Your ball python's morph is now: {morph_name} (custom)!")
+            print(f"Invalid morph name: {morph_name}")
+            print("Available morphs: " + ", ".join([m["name"] for m in morphs.values() if m["name"] != "Custom"]))
         return
     
     # Interactive menu mode

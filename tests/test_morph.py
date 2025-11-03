@@ -117,11 +117,12 @@ def test_custom_morph_empty_name(monkeypatch, capsys):
     assert "cannot be empty" in captured.lower()
 
 
-def test_custom_morph_with_parameter(capsys):
-    """Test setting custom morph with parameter"""
+def test_custom_morph_with_parameter_invalid(capsys):
+    """Test that invalid morph names via parameter don't update state"""
     set_morph("Super Pastel Mojave")
     state = load_state()
     captured = capsys.readouterr().out
     
-    assert state["morph"] == "Super Pastel Mojave"
-    assert "custom" in captured.lower()
+    # Should remain default since it's not a preset morph
+    assert state["morph"] == "Normal/Wild Type"
+    assert "Invalid morph name" in captured
