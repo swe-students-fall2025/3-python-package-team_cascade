@@ -36,7 +36,20 @@ def test_rename_pet_empty(monkeypatch, capsys):
 
     
     assert "Name cannot be empty." in captured
-    assert new_state["name"] == "Fluffy" 
+    assert new_state["name"] == "Fluffy"
+
+# rename_pet(): with parameter
+def test_rename_pet_with_parameter(capsys):
+    state = load_state()
+    state["name"] = "OldName"
+    save_state(state)
+    
+    rename_pet("NewName")
+    
+    new_state = load_state()
+    captured = capsys.readouterr().out
+    assert new_state["name"] == "NewName"
+    assert "Pet name changed to 'NewName'!" in captured 
 
 
 # collect_money(): correct case
@@ -135,3 +148,34 @@ def test_feed_pet_return(monkeypatch):
 
     assert new_state["money"] == 500
     assert new_state["mood"] == 50
+
+# feed_pet(): with parameter - apple
+def test_feed_pet_with_parameter_apple(capsys):
+    state = load_state()
+    state["money"] = 500
+    state["mood"] = 60
+    save_state(state)
+    
+    feed_pet("apple")
+    
+    new_state = load_state()
+    captured = capsys.readouterr().out
+    assert new_state["mood"] == 70  # 60 + 10
+    assert new_state["money"] == 420  # 500 - 80
+    assert "apple" in captured.lower()
+    assert "🍎" in captured
+
+# feed_pet(): with parameter - invalid food name
+def test_feed_pet_invalid_food_name(capsys):
+    state = load_state()
+    state["money"] = 500
+    state["mood"] = 60
+    save_state(state)
+    
+    feed_pet("invalid_food")
+    
+    new_state = load_state()
+    captured = capsys.readouterr().out
+    assert new_state["mood"] == 60  # unchanged
+    assert new_state["money"] == 500  # unchanged
+    assert "Invalid food name" in captured

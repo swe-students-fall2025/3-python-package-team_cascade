@@ -60,10 +60,14 @@ def collect_money():
     print(f"Total balance: {state['money']} coins.")
 
 
-def feed_pet():
+def feed_pet(food_name: str = None):
     """
     Feed your pet with food purchased using money.
     Each food has different cost and mood increase.
+    
+    Args:
+        food_name: Optional food name (apple, cake, coffee, carrot, sushi).
+                  If not provided, will show interactive menu.
     """
     state = load_state()
     name = state.get("name", "Guido")
@@ -88,6 +92,39 @@ def feed_pet():
         },
         "custom": {"cost": 80, "mood": 10, "emoji": "🍽️", "msg": "Yum! That was tasty!"},
     }
+    
+    # If food_name is provided, use it directly
+    if food_name:
+        food_name = food_name.lower().strip()
+        if food_name not in foods:
+            print(f"Invalid food name: {food_name}")
+            print(f"Available foods: {', '.join([f for f in foods.keys() if f != 'custom'])}")
+            return
+        
+        selected = food_name
+        food = foods[selected]
+        display_name = selected
+        
+        # check balance
+        if money < food["cost"]:
+            print(f"Not enough coins! {food['cost']} needed, but you have {money}.")
+            return
+
+        # apply effects
+        money -= food["cost"]
+        new_mood = min(100, mood + food["mood"])
+        state["money"] = money
+        state["mood"] = new_mood
+        state["last_feed_date"] = datetime.now().strftime("%Y-%m-%d")
+        save_state(state)
+
+        print(f"\n{food['emoji']} You fed {name} a {display_name}!")
+        print(food["msg"])
+        print(f" Mood increased to {new_mood}/100.")
+        print(f" Remaining balance: {money} coins.\n")
+        return
+    
+    # Interactive menu mode (original behavior)
     print(f"\n{name}'s current mood: {mood}/100 😊")
     print(f"Current balance: {money} coins 💰")
     print("Choose something to feed your pet:")

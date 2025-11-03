@@ -11,7 +11,13 @@ def main():
         "command",
         nargs="?",
         default="menu",
-        help="Available commands: start, end, status, feed, menu",
+        help="Available commands: start, end, status, feed, rename, menu",
+    )
+    parser.add_argument(
+        "arg",
+        nargs="?",
+        default=None,
+        help="Optional argument for feed (food name) or rename (new name)",
     )
     args = parser.parse_args()
 
@@ -24,11 +30,13 @@ def main():
     elif args.command == "status":
         print(get_status())
     elif args.command == "feed":
-        feed_pet()
+        feed_pet(args.arg)
+    elif args.command == "rename":
+        rename_pet(args.arg)
     elif args.command == "menu":
         main_menu()
     else:
-        print("Unknown command. Use: start | end | status | feed | menu")
+        print("Unknown command. Use: start | end | status | feed [food] | rename [name] | menu")
 
 
 def actions_menu():
