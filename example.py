@@ -80,7 +80,7 @@ def main():
     
     # Check current coins
     state = load_state()
-    print(f"\nYou currently have {state['coins']} coins.")
+    print(f"\nYou currently have {state.get('coins', 0)} coins.")
     
     prey_choice = input("\nWhat would you like to feed your python? (or press Enter for 'mouse'): ").strip().lower()
     if not prey_choice:
@@ -98,12 +98,12 @@ def main():
     print("\n📈 RAW DATA")
     print("-" * 60)
     state = load_state()
-    print(f"💰 Total coins: {state['coins']}")
-    print(f"⏱️  Total study time: {state['total_minutes']} minutes")
-    print(f"📅 Current streak: {state['streak']} days")
-    print(f"🎯 Level: {state['level']}")
-    print(f"😊 Mood: {state['mood']}")
-    print(f"🎨 Morph: {state['morph']}")
+    print(f"💰 Total coins: {state.get('coins', 0)}")
+    print(f"⏱️  Total study time: {state.get('total_minutes', 0)} minutes")
+    print(f"📅 Current streak: {state.get('streak', 0)} days")
+    print(f"🎯 Level: {state.get('level', 1)}")
+    print(f"😊 Mood: {state.get('mood', 0)}")
+    print(f"🎨 Morph: {state.get('morph', 'Banana')}")
     print(f"📝 Session tasks planned: {state['session_tasks_planned']}")
     print(f"✅ Session tasks completed: {state['session_tasks_completed']}")
 
