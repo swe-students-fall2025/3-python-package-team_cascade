@@ -260,3 +260,34 @@ def set_morph(morph_name: str = None):
     print(f"\n✨ Your ball python's morph is now: {selected_morph}!")
     print(f"   {morphs[choice]['desc']}")
     print("🐍 Your python looks beautiful!\n")
+
+ENCOURAGEMENT_PHRASES = [
+    "You're doing great! Keep up the good work!",
+    "Every study session makes you smarter!",
+    "Don't give up! A little more effort!",
+    "I believe in you! You've got this!",
+    "Sssslithering sssuccess is just around the corner!",
+    "Stay focused! You're on a roll!",
+    "Look at you, being so productive!",
+    "Your dedication is inspiring!",
+    "Just think of all the coins you'll earn!",
+    "Keep going! Your future self will thank you.",
+]
+
+def get_encouragement() -> str:
+    """
+    Returns a random encouraging phrase from the pet.
+
+    The phrase is personalized with the pet's name if it has one.
+
+    Returns:
+        A string containing a formatted encouragement message.
+    """
+    state = load_state()
+    # Get the pet's name, or use the default
+    pet_name = state.get("name", "Guido") 
+
+    # Pick a random phrase from the list
+    phrase = random.choice(ENCOURAGEMENT_PHRASES)
+
+    return f"🐍 {pet_name} says: \"{phrase}\""
