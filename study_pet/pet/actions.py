@@ -262,16 +262,16 @@ def set_morph(morph_name: str = None):
     print("🐍 Your python looks beautiful!\n")
 
 ENCOURAGEMENT_PHRASES = [
-    "You're doing great! Keep up the good work!",
-    "Every study session makes you smarter!",
-    "Don't give up! A little more effort!",
-    "I believe in you! You've got this!",
+    "You're doing sssso great! Keep up the good work!",
+    "Every sssstudy ssssession makes you sssmarter!",
+    "Don't give up! Jussst a little more effort!",
+    "I believe in you! You've got thisss!",
     "Sssslithering sssuccess is just around the corner!",
-    "Stay focused! You're on a roll!",
-    "Look at you, being so productive!",
-    "Your dedication is inspiring!",
-    "Just think of all the coins you'll earn!",
-    "Keep going! Your future self will thank you.",
+    "Sssstay focused! You're on a roll!",
+    "Look at you, being sssso productive!",
+    "Your dedication is insssspiring!",
+    "Jussst think of all the coinsss you'll earn!",
+    "Keep going! Your future ssself will thank you.",
 ]
 
 def get_encouragement() -> str:
