@@ -11,7 +11,7 @@ SsstudyPet package. It shows how to:
 """
 
 from study_pet.tracker import start_session, end_session
-from study_pet.pet import feed_pet, rename_pet, set_morph, get_status
+from study_pet.pet import feed_pet, rename_pet, set_morph, get_status, get_encouragement
 from study_pet.data_manager import load_state
 
 
@@ -34,6 +34,10 @@ def main():
     print("\n🎉 ENDING STUDY SESSION")
     print("-" * 60)
     end_session()  # Will prompt for completed tasks
+
+    print("\n📣 GETTING ENCOURAGEMENT")
+    print("-" * 60)
+    print(get_encouragement())
 
     # Check your ball python's status
     print("\n📊 CHECKING YOUR BALL PYTHON'S STATUS")
