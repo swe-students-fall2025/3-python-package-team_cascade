@@ -6,5 +6,6 @@ __all__ = [
     "rename_pet",
     "feed_pet",
     "set_morph",
+    "get_encouragement",
     "check_daily_mood_decay",
 ]
