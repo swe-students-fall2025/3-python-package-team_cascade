@@ -8,8 +8,8 @@
 
 - **📚 Study Session Tracking**: Start and end study sessions with automatic time tracking
 - **✅ Task-Based Rewards**: Set tasks at the start of each session and earn 75 coins per completed task
-- **� Virtual Ball Python**: Your snake levels up based on total study hours (1 level per 5 hours)
-- **� Mood System**: Keep your python happy by logging in regularly and feeding it
+- **🐍 Virtual Ball Python**: Your snake levels up based on total study hours (1 level per 5 hours)
+- **🌡️ Mood System**: Keep your python happy by logging in regularly and feeding it
 - **💰 Earn Coins**: Complete tasks to earn coins that can be used to purchase food for your python
 - **🐭 Feed Your Python**: Choose from various prey (mouse, rat, quail, rabbit, cricket) to boost mood
 - **📈 Progress Tracking**: Monitor your study streaks, total study time, and python status
@@ -29,7 +29,7 @@
 Install from PyPI:
 
 ```bash
-pip install study-pet
+pip install ssstudy-pet
 ```
 
 Or install from source:
@@ -40,25 +40,77 @@ cd team_cascade
 pipenv install --dev
 ```
 
-## Using SsstudyPet in Your Code
+## Examples
+
+Want to see SsstudyPet in action? We provide **two complete demo options**:
+
+### 📓 Option 1: Interactive Jupyter Notebook
+
+Perfect for visual learners and live demonstrations!
+
+**Location:** [`notebook_demo.ipynb`](notebook_demo.ipynb)
+
+**Features:**
+- Step-by-step walkthrough of all features
+- Live code examples you can run and modify
+- Mock input functions for smooth demo flow
+- Complete demonstration of study sessions, feeding, customization, and more
+
+**To run:**
+```bash
+# Install Jupyter if you haven't already
+pip install jupyter
+
+# Open the demo notebook
+jupyter notebook notebook_demo.ipynb
+```
+
+### 🐍 Option 2: Python Script Demo
+
+Complete Python program you can run from the command line!
+
+**Location:** [`full_program_demo.py`](full_program_demo.py)
+
+**Features:**
+- Full demonstration of all SsstudyPet functions
+- Shows study sessions, task tracking, rewards, feeding, and customization
+- Easy to read and modify for your own use
+- No Jupyter required - just run with Python
+
+**To run:**
+```bash
+python full_program_demo.py
+```
+
+### 💻 Using SsstudyPet in Your Code
 
 You can import and use SsstudyPet's functions in your own Python programs. Here's documentation for all available functions:
 
 ### Study Session Management
 
 ```python
-from study_pet.tracker import start_session, end_session
+from study_pet.tracker import start_session, end_session, show_encouragement
 
 # Start a study session with task planning
 start_session()
 # Prompts: "How many tasks do you plan to complete this session?"
 # Sets session_tasks_planned and records start time
+# Automatically shows an encouragement message to motivate you
 
 # End a study session with task completion
 end_session()
 # Prompts: "How many tasks did you complete this session?"
 # Rewards 75 coins per completed task
 # Updates total study time and saves progress
+# Automatically shows a congratulatory encouragement message
+
+# Get encouragement during an active study session
+show_encouragement()
+# Shows elapsed study time and a motivational message
+# Only works during an active session (after start_session, before end_session)
+# Example output:
+#   ⏱️  You've been studying for 15.3 minutes!
+#   🐍 Monty says: "Sssstay focused! You're on a roll!"
 ```
 
 ### Pet Care Functions
@@ -109,12 +161,15 @@ save_state(state)
 reset_data()
 ```
 
-### Example Program
+### Example Programs
 
-See our complete example program that demonstrates all functions: [example.py](https://github.com/swe-students-fall2025/3-python-package-team_cascade/blob/main/example.py)
+We provide two example options:
+
+1. **📓 Interactive Demo Notebook** ([`notebook_demo.ipynb`](notebook_demo.ipynb)) - Jupyter notebook with step-by-step demonstrations
+2. **🐍 Python Script** ([`full_program_demo.py`](https://github.com/swe-students-fall2025/3-python-package-team_cascade/blob/main/full_program_demo.py)) - Complete Python program showcasing all functions
 
 ```python
-# example.py - Complete demonstration of SsstudyPet
+# full_program_demo.py - Complete demonstration of SsstudyPet
 from study_pet.tracker import start_session, end_session
 from study_pet.pet import feed_pet, rename_pet, set_morph, get_status, get_encouragement
 from study_pet.data_manager import load_state
@@ -156,13 +211,48 @@ print(f"\n💰 Total coins: {state['coins']}")
 print(f"⏱️  Total study time: {state['total_minutes']} minutes")
 ```
 
+## Command Line Usage
+
+### Quick Start Commands
+
+```bash
+# Start a study session (automatic encouragement!)
+study-pet start
+
+# Get encouragement during your session
+study-pet encourage
+
+# End your session (automatic congratulation!)
+study-pet end
+
+# Check your pet's status
+study-pet status
+
+# Feed your pet
+study-pet feed mouse
+
+# Interactive menu
+study-pet menu
+```
+
+### All Available Commands
+
+- `study-pet start` - Start a study session with task planning
+- `study-pet end` - End session and get rewards
+- `study-pet status` - Check your ball python's status
+- `study-pet feed [food]` - Feed your python (mouse, rat, quail, rabbit, cricket)
+- `study-pet rename [name]` - Rename your ball python
+- `study-pet morph [type]` - Change your python's morph/color pattern
+- `study-pet encourage` - Get an encouraging message (during active session)
+- `study-pet menu` - Interactive menu interface
+
 ## Contributing to SsstudyPet
 
 Want to help make SsstudyPet better? Here's how to set up your development environment:
 
 ### Prerequisites
 
-- Python 3.10 or higher (Python 3.13 recommended although we used 3.9)
+- Python 3.10 or higher (Python 3.13 recommended)
 - pipenv for dependency management
 
 ### Setup Instructions
@@ -288,4 +378,4 @@ pytest tests/ --cov=study_pet --cov-report=term-missing
 
 ## PyPI Package
 
-This package is available on PyPI: [study-pet](https://test.pypi.org/project/study-pet/0.1.1/)
+This package is available on TestPyPI: [study-pet](https://test.pypi.org/project/study-pet/0.1.1/)

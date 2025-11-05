@@ -36,7 +36,14 @@ def main():
 
     print("\n📣 GETTING ENCOURAGEMENT")
     print("-" * 60)
+    # Single encouragement (basic example)
     print(get_encouragement())
+
+    # Small demonstration: show a few encouragements in a row to
+    # demonstrate randomness and personalization.
+    print("\n💬 A few more encouragements:")
+    for _ in range(3):
+        print(get_encouragement())
 
     # Check your ball python's status
     print("\n📊 CHECKING YOUR BALL PYTHON'S STATUS")
@@ -81,9 +88,9 @@ def main():
     print("  - quail   (130 coins, +25 mood)")
     print("  - rabbit  (150 coins, +30 mood)")
     
-    # Check current coins
+    # Check current coins (use canonical 'money' key)
     state = load_state()
-    print(f"\nYou currently have {state.get('coins', 0)} coins.")
+    print(f"\nYou currently have {state.get('money', 0)} coins.")
     
     prey_choice = input("\nWhat would you like to feed your python? (or press Enter for 'mouse'): ").strip().lower()
     if not prey_choice:
@@ -101,13 +108,14 @@ def main():
     print("\n📈 RAW DATA")
     print("-" * 60)
     state = load_state()
-    print(f"💰 Total coins: {state.get('coins', 0)}")
+    print(f"💰 Total coins: {state.get('money', 0)}")
     print(f"⏱️  Total study time: {state.get('total_minutes', 0)} minutes")
     print(f"📅 Current streak: {state.get('streak', 0)} days")
     print(f"🎯 Level: {state.get('level', 1)}")
     print(f"😊 Mood: {state.get('mood', 0)}")
     print(f"🎨 Morph: {state.get('morph', 'Banana')}")
-    print(f"📝 Session tasks planned: {state['session_tasks_planned']}")
+    # Show the last session's planned tasks (preserved by end_session)
+    print(f"📝 Last session tasks planned: {state.get('last_session_tasks_planned', 0)}")
     print(f"✅ Session tasks completed: {state['session_tasks_completed']}")
 
     print("\n" + "=" * 60)
