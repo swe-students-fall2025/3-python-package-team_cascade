@@ -290,4 +290,4 @@ pytest tests/ --cov=study_pet --cov-report=term-missing
 
 ## PyPI Package
 
-This package is available on PyPI: [study-pet](https://pypi.org/project/study-pet/)
+This package is available on PyPI: [study-pet](https://test.pypi.org/project/study-pet/0.1.0/))
