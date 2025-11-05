@@ -64,23 +64,18 @@ end_session()
 ### Pet Care Functions
 
 ```python
-from study_pet.pet import feed_pet, rename_pet, set_morph
+from study_pet.pet import feed_pet, rename_pet, set_morph, get_encouragement
 
 # Feed your ball python (costs coins, boosts mood)
 feed_pet("mouse")   # Costs 50 coins, +10 mood
-feed_pet("rat")     # Costs 80 coins, +15 mood
-feed_pet("quail")   # Costs 130 coins, +25 mood
-feed_pet("rabbit")  # Costs 150 coins, +30 mood
-feed_pet("cricket") # Costs 30 coins, +5 mood
+# ... (rest of feed_pet examples) ...
 
 # Rename your ball python
 rename_pet("Slithers")
 
 # Set your ball python's morph (color pattern)
-set_morph("Banana")           # Choose from 10 preset morphs
-set_morph("Custom Morph Name") # Or create your own custom morph
-# Available presets: Banana, Pastel, Pied, Clown, Mojave, 
-# Cinnamon, Albino, Blue Eyed Leucistic, GHI, Spider
+set_morph("Banana")
+# ... (rest of set_morph examples) ...
 
 # Get an encouraging phrase from your pet
 encouragement = get_encouragement()
@@ -121,7 +116,7 @@ See our complete example program that demonstrates all functions: [example.py](h
 ```python
 # example.py - Complete demonstration of SsstudyPet
 from study_pet.tracker import start_session, end_session
-from study_pet.pet import feed_pet, rename_pet, set_morph, get_status
+from study_pet.pet import feed_pet, rename_pet, set_morph, get_status, get_encouragement
 from study_pet.data_manager import load_state
 
 # Start a study session
@@ -133,6 +128,9 @@ print("\n📚 Studying...\n")
 
 # End the session and earn rewards
 end_session()  # Will prompt for completed tasks
+
+# Get encouragement
+print("\n" + get_encouragement())
 
 # Check your ball python's status
 print("\n" + get_status())
@@ -164,7 +162,7 @@ Want to help make SsstudyPet better? Here's how to set up your development envir
 
 ### Prerequisites
 
-- Python 3.10 or higher (Python 3.13 recommended)
+- Python 3.10 or higher (Python 3.13 recommended although we used 3.9)
 - pipenv for dependency management
 
 ### Setup Instructions
