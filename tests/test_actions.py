@@ -1,10 +1,7 @@
 import sys, os, time, pytest, builtins
 from datetime import datetime
-from unittest.mock import patch
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from study_pet.pet.actions import rename_pet, feed_pet, get_encouragement 
-from study_pet.data_manager import load_state, save_state, reset_state
 
 from study_pet.pet.actions import rename_pet, feed_pet
 from study_pet.data_manager import load_state, save_state, reset_state
@@ -235,36 +232,3 @@ def test_ball_python_theme_in_output(capsys):
     
     captured = capsys.readouterr().out
     assert "ball python" in captured.lower()
-
-def test_get_encouragement_format(monkeypatch):
-    """Tests the encouragement string is formatted correctly with a pet name."""
-    state = {"name": "Monty", "money": 100}
-    monkeypatch.setattr("study_pet.pet.actions.load_state", lambda: state)
-
-    with patch("random.choice", return_value="You've got this!") as mock_choice:
-        result = get_encouragement()
-        mock_choice.assert_called_once() 
-
-    assert result == "🐍 Monty says: \"You've got this!\""
-
-def test_get_encouragement_default_name(monkeypatch):
-    """Tests the format using the default name if no name is set."""
-    state = {"money": 100} # No 'name' key
-    monkeypatch.setattr("study_pet.pet.actions.load_state", lambda: state)
-
-    with patch("random.choice", return_value="Keep going!"):
-        result = get_encouragement()
-
-    assert result == "🐍 Guido says: \"Keep going!\""
-
-def test_get_encouragement_returns_string(monkeypatch):
-    """Tests that the function returns a non-empty string."""
-    state = {"name": "Testy"}
-    monkeypatch.setattr("study_pet.pet.actions.load_state", lambda: state)
-
-    result = get_encouragement()
-
-    assert isinstance(result, str)
-    assert len(result) > 0
-    assert "Testy says:" in result
-
