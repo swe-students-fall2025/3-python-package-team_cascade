@@ -81,6 +81,14 @@ set_morph("Banana")           # Choose from 10 preset morphs
 set_morph("Custom Morph Name") # Or create your own custom morph
 # Available presets: Banana, Pastel, Pied, Clown, Mojave, 
 # Cinnamon, Albino, Blue Eyed Leucistic, GHI, Spider
+
+# Get an encouraging phrase from your pet
+encouragement = get_encouragement()
+print(encouragement)  # Outputs: 🐍 Guido says: "Sssstay focused!"
+
+# Get your ball python's current status
+status = get_status()
+print(status)  # Returns formatted status string
 ```
 
 ### Status and Data Functions
