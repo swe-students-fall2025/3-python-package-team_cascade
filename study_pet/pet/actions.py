@@ -201,7 +201,6 @@ def set_morph(morph_name: str = None):
             "desc": "Create your own unique morph!"
         }
     }
-    
     # If morph_name is provided directly
     if morph_name:
         morph_name = morph_name.strip()

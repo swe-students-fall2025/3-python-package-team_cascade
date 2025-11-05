@@ -14,7 +14,6 @@ from study_pet.tracker import start_session, end_session
 from study_pet.pet import feed_pet, rename_pet, set_morph, get_status, get_encouragement
 from study_pet.data_manager import load_state
 
-
 def main():
     print("=" * 60)
     print("🐍 Welcome to SsstudyPet Example Program 🐍")
