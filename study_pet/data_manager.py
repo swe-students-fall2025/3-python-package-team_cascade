@@ -14,6 +14,7 @@ default_state = {
     "mood": 100,
     "streak_days": 0,
     "money": 0,
+    "last_session_tasks_planned": 0,
     "last_feed_date": None,
     "last_open_date": None,
     "session_tasks_planned": 0,

@@ -143,3 +143,54 @@ def test_start_session_validates_task_input(monkeypatch, capsys):
     
     state = load_state()
     assert state["session_tasks_planned"] == 3
+
+
+def test_end_session_writes_last_session_tasks_planned(monkeypatch):
+    """Ensure end_session() saves the last planned tasks to state."""
+    inputs = iter(["4", "4"])  # 4 tasks planned, 4 completed
+    monkeypatch.setattr(builtins, "input", lambda _: next(inputs))
+
+    start_session()
+    # short sleep to simulate time passing
+    time.sleep(0.1)
+    end_session()
+
+    state = load_state()
+    assert state.get("last_session_tasks_planned") == 4
+
+
+def test_show_encouragement_during_active_session(monkeypatch, capsys):
+    """Test that show_encouragement() works during an active session."""
+    from study_pet.tracker import show_encouragement
+    
+    monkeypatch.setattr(builtins, "input", lambda _: "2")
+    
+    # Start a session
+    start_session()
+    time.sleep(0.1)
+    
+    # Call show_encouragement
+    show_encouragement()
+    
+    captured = capsys.readouterr().out
+    assert "You've been studying for" in captured
+    assert "says:" in captured  # Encouragement message contains pet name + says
+    
+    # Clean up
+    monkeypatch.setattr(builtins, "input", lambda _: "2")
+    end_session()
+
+
+def test_show_encouragement_without_active_session(capsys):
+    """Test that show_encouragement() shows warning when no session is active."""
+    from study_pet.tracker import show_encouragement
+    
+    # Ensure no active session
+    state = load_state()
+    state["last_session_start"] = None
+    save_state(state)
+    
+    show_encouragement()
+    
+    captured = capsys.readouterr().out
+    assert "No active study session" in captured

@@ -13,6 +13,7 @@ import time
 from datetime import datetime
 from .data_manager import load_state, save_state
 from .pet.core import update_pet
+from .pet.actions import get_encouragement
 
 
 def start_session():
@@ -44,6 +45,7 @@ def start_session():
     save_state(state)
     print(f"📘 Study session started at {datetime.now().strftime('%H:%M:%S')}")
     print(f"📝 Tasks planned: {num_tasks}")
+    print(f"\n{get_encouragement()}")
 
 
 def end_session():
@@ -86,7 +88,9 @@ def end_session():
         coins_earned = tasks_completed * coins_per_task
         state["money"] = state.get("money", 0) + coins_earned
         state["session_tasks_completed"] = tasks_completed
-        
+        # preserve the last planned tasks for display after session ends
+        state["last_session_tasks_planned"] = tasks_planned
+
         print(f"✅ You completed {tasks_completed} task(s)!")
         print(f"💰 Earned {coins_earned} coins! (Total: {state['money']} coins)")
     
@@ -102,6 +106,9 @@ def end_session():
     # Trigger pet update
     update_pet()
     print("🐍 Ball python data updated!")
+    
+    # Congratulate the user
+    print(f"\n{get_encouragement()}")
 
 
 def reset_sessions():
@@ -118,6 +125,25 @@ def get_total_time():
     """Returns the total study time stored in JSON (for tests)."""
     state = load_state()
     return state.get("total_study_time", 0.0)
+
+
+def show_encouragement():
+    """
+    Shows an encouragement message during an active study session.
+    This can be called manually or periodically to boost motivation.
+    """
+    state = load_state()
+    if not state.get("last_session_start"):
+        print("⚠️ No active study session. Start a session first!")
+        return
+    
+    # Calculate elapsed time
+    elapsed_hours = (time.time() - state.get("last_session_start", time.time())) / 3600
+    elapsed_minutes = elapsed_hours * 60
+    
+    print(f"\n⏱️  You've been studying for {elapsed_minutes:.1f} minutes!")
+    print(get_encouragement())
+    print()
 
 
 # Manual test
